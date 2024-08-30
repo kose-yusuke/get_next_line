@@ -34,3 +34,6 @@ sandbox/
 test*
 file*
 tmp*
+
+# Debug file
+get.c
