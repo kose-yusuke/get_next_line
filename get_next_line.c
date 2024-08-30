@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykoseki <ykoseki@student.42.fr>            +#+  +:+       +#+        */
+/*   By: koseki.yusuke <koseki.yusuke@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 23:18:11 by ykoseki           #+#    #+#             */
-/*   Updated: 2023/11/11 23:38:25 by ykoseki          ###   ########.fr       */
+/*   Updated: 2024/08/30 15:01:15 by koseki.yusu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	ft_concat_line(char **line, char *buf, char **rest)
 	if (!tmp)
 		return (vsnorm(line, rest));
 	*line = tmp;
-	tmp = NULL;
 	if (buf[rest_len] == '\n')
 	{
 		flag = 1;
@@ -86,7 +85,6 @@ char	*get_next_line(int fd)
 	static char	*rest[OPEN_MAX];
 	char		*line;
 	int			find_flag;
-	char		*tmp;
 
 	find_flag = 0;
 	if (fd < 0 || OPEN_MAX <= fd || BUFFER_SIZE <= 0)
@@ -106,23 +104,22 @@ char	*get_next_line(int fd)
 		find_flag = ft_concat_line(&line, rest[fd], &rest[fd]);
 	if (find_flag == 1)
 		return (line);
-	tmp = get_newline(fd, line, &rest[fd]);
-	return (tmp);
+	return (get_newline(fd, line, &rest[fd]));
 }
 
-// int main(){
-// 	char *str;
+int main(){
+	char *str;
 
-// 	int fd = open("get_next_line.c", O_RDONLY);
+	int fd = open("get_next_line.c", O_RDONLY);
 
-// 	for (int i = 0; i < 5; i++)
-// 	{
-// 		str = get_next_line(fd);
+	for (int i = 0; i < 5; i++)
+	{
+		str = get_next_line(fd);
 
-// 		printf("%d: %s",i,str);
-// 		free(str);
-// 	}
-// }
+		printf("%d: %s",i,str);
+		free(str);
+	}
+}
 
 // __attribute__((destructor)) static void destructor()
 // {
